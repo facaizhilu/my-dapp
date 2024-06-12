@@ -22,7 +22,7 @@
         </div>
     </div>
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
-    <script src="script.js"></script> <!-- 引用外部的 script.js 文件 -->
+    <script src="script.js"></script>
     <script>
         let countdown = 120;
         const countdownElement = document.getElementById('countdown');
