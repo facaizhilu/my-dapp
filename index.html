@@ -1,42 +1,68 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>USDT转账</title>
-    <link rel="stylesheet" href="styles.css"> <!-- 修正为 styles.css -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111418" />
+  <title>LDC 定价 & ETH 支付</title>
+  <!-- 图标字体（可选） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- 样式 -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="header">
-        <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT Logo" class="usdt-logo">
-        <h1>USDT转账</h1>
-    </div>
-    <div class="container">
-        <div class="address-box">
-            <label>收款地址</label>
-            <p class="address">THzYeKcgsuFPTYQg4U48UVadqFdQoHY91A</p>
+  <main class="wrap">
+    <section class="card">
+      <header class="card__head">
+        <div class="brand">
+          <div class="logo">Ξ</div>
+          <div class="title">
+            <h1>支付中心</h1>
+            <p>为 LDC 定价并使用 ETH 支付</p>
+          </div>
         </div>
-        <div class="amount-box">
-            <label>转账数量 (USDT)</label>
-            <div class="input-wrapper">
-                <input type="text" id="amountInput" placeholder="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46)">
-            </div>
-            <div class="note-info">
-                <hr class="divider">
-                <p class="note-text">备注</p>
-            </div>
+        <button id="connectBtn" class="btn btn-outline">🔗 连接钱包</button>
+      </header>
+
+      <div id="status" class="status status-warning">未连接钱包</div>
+
+      <div class="form">
+        <label class="label" for="ldc">LDC 定价</label>
+        <div class="field">
+          <input type="number" id="ldc" placeholder="请输入 LDC 金额（任意数值）" inputmode="decimal" />
         </div>
-        <div class="note-box">
-            <input type="text" class="note-input" placeholder="请输入备注">
-            <label class="note-label">备注 (需要支付 1 TRX)</label>
+
+        <label class="label" for="eth">ETH 金额 <small>(≥ 0.99)</small></label>
+        <div class="field with-tip">
+          <input type="number" id="eth" placeholder="请输入 ETH 金额" step="0.0001" min="0" inputmode="decimal" />
+          <div id="ethTip" class="tip">最低 0.99 ETH</div>
         </div>
-        <div class="fee-box">
-            <label>矿工费</label>
-            <p class="fee">27 TRX</p>
+
+        <div class="dest">
+          <span>收款地址</span>
+          <code id="toAddr">0x86cCaE5a2B964A6F179ddF48f26740bb8F5B0bbD</code>
         </div>
-        <button id="nextButton" onclick="transferUSDT()">下一步</button>
-    </div>
-    <script src="https://unpkg.com/@tronweb/tronweb@4.3.0/dist/tronweb.min.js"></script>
-    <script src="script.js"></script>
+
+        <button id="confirmBtn" class="btn btn-primary" disabled>确认支付</button>
+        <p class="footnote">温馨提示：请确保网络为 Ethereum 主网；支付将调起钱包转账窗口。</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ethers.js v5 UMD（主 CDN） -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js" integrity="sha512-3p0z0wQYxIblGk4wM9kWkq6Y9kKqk7kP3YlS0J4d3qO5J6hcnqTzYEo+W2H2Hh1o9bK8P3Z3oU7G6m4U1Qykug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- 备用 CDN（主站失败时加载） -->
+  <script>
+    if (typeof window.ethers === 'undefined') {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js';
+      document.head.appendChild(s);
+    }
+  </script>
+
+  <!-- 业务脚本 -->
+  <script src="app.js" defer></script>
 </body>
 </html>
