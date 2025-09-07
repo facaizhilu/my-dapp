@@ -5,12 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#111418" />
   <title>LDC 定价 & ETH 支付</title>
-  <!-- 图标字体（可选） -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- 样式 -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="wrap">
@@ -51,9 +47,8 @@
     </section>
   </main>
 
-  <!-- ethers.js v5 UMD（主 CDN） -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js" integrity="sha512-3p0z0wQYxIblGk4wM9kWkq6Y9kKqk7kP3YlS0J4d3qO5J6hcnqTzYEo+W2H2Hh1o9bK8P3Z3oU7G6m4U1Qykug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- 备用 CDN（主站失败时加载） -->
+  <!-- ethers.js v5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
   <script>
     if (typeof window.ethers === 'undefined') {
       var s = document.createElement('script');
@@ -63,6 +58,6 @@
   </script>
 
   <!-- 业务脚本 -->
-  <script src="app.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
