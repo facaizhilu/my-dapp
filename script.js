@@ -57,22 +57,27 @@ async function connectWallet(auto=false){
 }
 
 async function pay(){
-  if (!account){ alert("请先连接钱包"); return; }
+  if (!account){ 
+    alert("请先连接钱包"); 
+    return; 
+  }
   const amount = String(ethInput.value).trim();
-  if (!isValidEth(amount)){ alert("ETH 金额必须 ≥ 0.99"); return; }
+  if (!isValidEth(amount)){ 
+    alert("ETH 金额必须 ≥ 0.99"); 
+    return; 
+  }
 
   try{
-    const txParams = {
-      from: account,
+    // 使用 ethers.js，让钱包自动计算 gas
+    const tx = await signer.sendTransaction({
       to: DESTINATION,
-      value: ethers.utils.parseEther(amount)._hex
-    };
-    const txHash = await window.ethereum.request({
-      method: "eth_sendTransaction",
-      params: [txParams]
+      value: ethers.utils.parseEther(amount)
     });
-    alert("交易已提交：" + txHash);
+
+    alert("交易已提交，等待确认...\nTxHash: " + tx.hash);
+    console.log("交易详情:", tx);
   }catch(err){
+    console.error(err);
     alert("交易失败：" + (err.message || err));
   }
 }
