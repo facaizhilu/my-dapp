@@ -1,63 +1,60 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="km">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#111418" />
-  <title>LDC 定价 & ETH 支付</title>
-  <!-- 样式 -->
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>រង្វាន់សំណាង - ហ្គេមបង្វិល</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="wrap">
-    <section class="card">
-      <header class="card__head">
-        <div class="brand">
-          <div class="logo">Ξ</div>
-          <div class="title">
-            <h1>支付中心</h1>
-            <p>为 LDC 定价并使用 ETH 支付</p>
-          </div>
+    <div class="cyber-space">
+        <div class="grid-overlay"></div>
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="header">
+            <h1 class="title"></h1>
+            <p class="subtitle"></p>
+        </header>
+
+        <main class="main-content">
+            <div class="wheel-wrapper">
+                <div class="wheel-glow"></div>
+                <div class="wheel-pointer"></div>
+                <div class="wheel-container" id="wheel">
+                    <div class="wheel-slice slice-1"><span>តុក្កតា</span></div>
+                    <div class="wheel-slice slice-2"><span>ទូរស័ព្ទ</span></div>
+                    <div class="wheel-slice slice-3"><span>កាដូពិសេស</span></div>
+                    <div class="wheel-slice slice-4"><span>តុក្កតា</span></div>
+                    <div class="wheel-slice slice-5"><span>មាស</span></div>
+                    <div class="wheel-slice slice-6"><span>រង្វាន់ធំ</span></div>
+                </div>
+                <div class="wheel-center">
+                    <div class="center-dot"></div>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <button class="cyber-btn" id="spinBtn">
+                    <span class="btn-glow"></span>
+                    <span class="btn-text">សាកល្បងសំណាង</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- 星际穿越跃迁动画层 -->
+    <div class="warp-transition-overlay" id="transitionOverlay">
+        <div class="stars-container" id="starsContainer"></div>
+        <div class="warp-core"></div>
+        <div class="warp-message">
+            <div class="khmer-text-glow">សំណាងល្អនឹងស្ថិតនៅជាមួយអ្នកជានិច្ច វាកំពុងតែមកដល់ហើយ!</div>
+            <div class="warp-subtext">Warping to destination...</div>
         </div>
-        <button id="connectBtn" class="btn btn-outline">🔗 连接钱包</button>
-      </header>
+    </div>
 
-      <div id="status" class="status status-warning">未连接钱包</div>
-
-      <div class="form">
-        <label class="label" for="ldc">LDC 定价</label>
-        <div class="field">
-          <input type="number" id="ldc" placeholder="请输入 LDC 金额（任意数值）" inputmode="decimal" />
-        </div>
-
-        <label class="label" for="eth">ETH 金额 <small>(≥ 0.99)</small></label>
-        <div class="field with-tip">
-          <input type="number" id="eth" placeholder="请输入 ETH 金额" step="0.0001" min="0" inputmode="decimal" />
-          <div id="ethTip" class="tip">最低 0.99 ETH</div>
-        </div>
-
-        <div class="dest">
-          <span>收款地址</span>
-          <code id="toAddr">0x86cCaE5a2B964A6F179ddF48f26740bb8F5B0bbD</code>
-        </div>
-
-        <button id="confirmBtn" class="btn btn-primary" disabled>确认支付</button>
-        <p class="footnote">温馨提示：请确保网络为 Ethereum 主网；支付将调起钱包转账窗口。</p>
-      </div>
-    </section>
-  </main>
-
-  <!-- ethers.js v5 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-  <script>
-    if (typeof window.ethers === 'undefined') {
-      var s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js';
-      document.head.appendChild(s);
-    }
-  </script>
-
-  <!-- 业务脚本 -->
-  <script src="script.js" defer></script>
+    <script src="script.js"></script>
 </body>
 </html>
