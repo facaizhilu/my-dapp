@@ -1,92 +1,62 @@
-const DESTINATION = "0x86cCaE5a2B964A6F179ddF48f26740bb8F5B0bbD";
-const MAINNET_CHAIN_HEX = "0x1";
+document.addEventListener('DOMContentLoaded', () => {
+    const spinBtn = document.getElementById('spinBtn');
+    const wheel = document.getElementById('wheel');
+    const transitionOverlay = document.getElementById('transitionOverlay');
+    const starsContainer = document.getElementById('starsContainer');
 
-const connectBtn  = document.getElementById("connectBtn");
-const confirmBtn  = document.getElementById("confirmBtn");
-const statusBox   = document.getElementById("status");
-const ethInput    = document.getElementById("eth");
+    let isSpinning = false;
 
-let provider = null;
-let signer   = null;
-let account  = null;
-
-function setStatus(type, text){
-  statusBox.className = `status status-${type}`;
-  statusBox.textContent = text;
-}
-function isValidEth(v){
-  const n = Number(v);
-  return Number.isFinite(n) && n >= 0.99;
-}
-function syncButtonState(){
-  confirmBtn.disabled = !(account && isValidEth(ethInput.value));
-  const tip = document.getElementById("ethTip");
-  tip.textContent = isValidEth(ethInput.value) ? "金额有效 ✅" : "最低 0.99 ETH";
-}
-
-async function connectWallet(auto=false){
-  if (!window.ethereum){
-    setStatus("error", "未检测到钱包环境");
-    alert("请安装 MetaMask 或用钱包浏览器打开");
-    return;
-  }
-  if (typeof window.ethers === "undefined"){
-    setStatus("error", "ethers.js 未加载成功");
-    return;
-  }
-
-  try{
-    provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-    const method = auto ? "eth_accounts" : "eth_requestAccounts";
-    const accounts = await window.ethereum.request({ method });
-
-    if (!accounts.length){
-      setStatus("warning", "未连接钱包");
-      return;
+    // 动态生成星际穿越的星星粒子
+    function createStars() {
+        const starCount = 80;
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // 随机初始位置和大小
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 150;
+            const x = Math.cos(angle) * distance;
+            const y = Math.sin(angle) * distance;
+            
+            star.style.left = `calc(50% + ${x}px)`;
+            star.style.top = `calc(50% + ${y}px)`;
+            
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            // 随机动画时长和延迟，制造深空跃迁错落感
+            const duration = Math.random() * 0.6 + 0.4;
+            const delay = Math.random() * 0.5;
+            star.style.animationDuration = `${duration}s`;
+            star.style.animationDelay = `${delay}s`;
+            
+            starsContainer.appendChild(star);
+        }
     }
 
-    account = ethers.utils.getAddress(accounts[0]);
-    signer = provider.getSigner();
-    setStatus("ok", `已连接：${account.slice(0,6)}...${account.slice(-4)}`);
-    connectBtn.textContent = "✅ 已连接";
-    connectBtn.disabled = true;
-    syncButtonState();
-  }catch(err){
-    setStatus("error", "连接失败");
-  }
-}
+    createStars();
 
-async function pay(){
-  if (!account){ 
-    alert("请先连接钱包"); 
-    return; 
-  }
-  const amount = String(ethInput.value).trim();
-  if (!isValidEth(amount)){ 
-    alert("ETH 金额必须 ≥ 0.99"); 
-    return; 
-  }
+    spinBtn.addEventListener('click', () => {
+        if (isSpinning) return;
+        isSpinning = true;
 
-  try{
-    // 使用 ethers.js，让钱包自动计算 gas
-    const tx = await signer.sendTransaction({
-      to: DESTINATION,
-      value: ethers.utils.parseEther(amount)
+        spinBtn.style.opacity = '0.7';
+        spinBtn.style.pointerEvents = 'none';
+
+        // 随机旋转多圈并停在特定角度
+        const randomDegree = Math.floor(Math.random() * 360) + 1800; // 至少转5圈
+        wheel.style.transform = `rotate(${randomDegree}deg)`;
+
+        // 转盘旋转的同时，触发星际穿越跃迁动画
+        setTimeout(() => {
+            transitionOverlay.classList.add('active');
+            
+            // 动画播放完成后，完美跳转至指定网站
+            setTimeout(() => {
+                window.location.href = 'https://www.vkm333.com';
+            }, 1800);
+        }, 3200);
     });
-
-    alert("交易已提交，等待确认...\nTxHash: " + tx.hash);
-    console.log("交易详情:", tx);
-  }catch(err){
-    console.error(err);
-    alert("交易失败：" + (err.message || err));
-  }
-}
-
-connectBtn.addEventListener("click", ()=>connectWallet(false));
-confirmBtn.addEventListener("click", pay);
-ethInput.addEventListener("input", syncButtonState);
-
-window.addEventListener("load", () => {
-  syncButtonState();
-  connectWallet(true);
 });
